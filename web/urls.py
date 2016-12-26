@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-
+import os
 from news.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^catagory/', catagoryList.as_view()),
-    url(r'^news/all', allNewsList.as_view()),
+    url(r'^catagory/$', allCatagory.as_view()),
+    url(r'^comment/$', allComment.as_view()),
+    url(r'^news/$', allNewsList.as_view()),
     url(r'^news/info/(\d+)', newsInfo.as_view()),
     url(r'^news/catagory/(\d+)', newsList.as_view()),
     url(r'^news/comment/(\d+)', commentList.as_view()),

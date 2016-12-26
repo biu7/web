@@ -7,6 +7,7 @@ from django.db import models
 class Catagory(models.Model):
     name = models.TextField(max_length=100)
 
+
 class News(models.Model):
     catagory = models.ManyToManyField(Catagory)
     title = models.CharField(max_length=100)

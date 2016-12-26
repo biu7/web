@@ -8,12 +8,16 @@ from serializer import *
 from rest_framework import generics
 
 
-class catagoryList(generics.ListCreateAPIView):
+class allCatagory(generics.ListCreateAPIView):
     queryset = Catagory.objects.all()
     serializer_class = CatagorySerialize
-class allNewsList(generics.ListAPIView):
+class allNewsList(generics.ListCreateAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerialize
+
+class allComment(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerialize
 
 class newsList(APIView):
     def get(self,request,num,format=None):
@@ -22,16 +26,7 @@ class newsList(APIView):
         ser = NewsSerialize(news,many=True)
         return Response(ser.data)
 
-    def post(self,request,num,format=None):
-        ser = NewsSerialize(data=request.data)
-        if ser.is_valid():
-            ser.save()
-            return Response(ser.data)
-        return Response(ser.errors)
-
-
 class newsInfo(APIView):
-
     def get(self,request,num,format=None):
         news = News.objects.get(id=num)
         ser = NewsSerialize(news)
@@ -42,7 +37,7 @@ class newsInfo(APIView):
         news.delete()
         return Response(status=200)
 
-    def put(self,request,num,format=None):
+    def post(self,request,num,format=None):
         news = News.objects.get(id=num)
         ser = NewsSerialize(news,data=request.data)
         if ser.is_valid():
@@ -56,13 +51,6 @@ class commentList(APIView):
         comment = news.comment_set.all()
         ser = CommentSerialize(comment,many=True)
         return Response(ser.data)
-    def post(self,request,num,format=None):
-        ser = CommentSerialize(data=request.data)
-        if ser.is_valid():
-            ser.save()
-            return Response(ser.data)
-        return Response(ser.errors)
-
 class commentInfo(APIView):
 
     def get(self,request,num,format=None):
@@ -75,7 +63,7 @@ class commentInfo(APIView):
         comment.delete()
         return Response(status=200)
 
-    def put(self,request,num,format=None):
+    def post(self,request,num,format=None):
         comment = Comment.objects.get(id=num)
         ser = CommentSerialize(comment,data=request.data)
         if ser.is_valid():

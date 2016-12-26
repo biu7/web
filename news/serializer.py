@@ -13,16 +13,6 @@ class NewsSerialize(serializers.ModelSerializer):
         model = News
         fields = '__all__'
 
-        def restore_object(self, attrs, instance=None):
-            if instance:
-                instance.title = attrs['title']
-                instance.author = attrs['author']
-                instance.time = attrs['time']
-                instance.content = attrs['content']
-                instance.imgsrc = attrs['imgsrc']
-                return instance
-
-            return News(**attrs)
 class CommentSerialize(serializers.ModelSerializer):
     class Meta:
         model = Comment
